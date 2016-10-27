@@ -57,7 +57,7 @@ Use the .scheduleTask method to schedule a task and provide a processing method.
 
 Scheduling a task will cause the task scheduler to immediately start polling for work for that specified task.  By default, the task scheduler looks for tasks that need running at once every second (configurable by overridding the .pollingInterval property).  Polling will continue to occur until the .stopPolling() method is called.
 
-The second parameter specifies the how often to run the task and uses cron syntax:
+The second parameter `cronSchedule` specifies the how often to run the task and uses cron syntax:
 ```
 *    *    *    *    *    *
 ┬    ┬    ┬    ┬    ┬    ┬
@@ -70,12 +70,12 @@ The second parameter specifies the how often to run the task and uses cron synta
 └───────────────────────── second (0 - 59, optional)
 ```
 
-The third parameter specifies the processing method for the task.  When the task needs to be run, the provided processing method will be called.
+The third parameter `worker` specifies the processing method for the task.  When the task needs to be run, the provided processing method will be called.
 
-Example:
+Example (runs every morning at 5 AM):
 ```javascript
-scheduler.scheduleTask('daily-reminder', '* 5 * * *', function() {
-  // ... do stuff here
+scheduler.scheduleTask('daily-reminder', '0 5 * * *', function() {
+  // ... send the reminder here
   // this can return a promise (chain) if needed.
 });
 ```
