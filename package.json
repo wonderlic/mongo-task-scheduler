@@ -16,15 +16,7 @@
     "type": "git",
     "url": "https://github.com/wonderlic/mongo-task-scheduler.git"
   },
-  "devDependencies": {
-    "chai": "3.5.0",
-    "chai-datetime": "1.4.1",
-    "mocha": "3.0.2",
-    "mongodb": "2.2.10",
-    "sinon": "1.17.5",
-    "sinon-as-promised": "4.0.2"
-  },
-  "scripts": {
-    "test": "mocha"
+  "engines": {
+    "node": ">=8"
   }
 }
