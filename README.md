@@ -31,21 +31,14 @@ Set the .databasePromise property to a function that returns a promise that (eve
 
 Example:
 ```javascript
-var Q = require('q');
 var MongoClient = require('mongodb').MongoClient;
 
 var mongoUri = ...;
 var mongoOptions = ...;
-var mongoDb;
-
-MongoClient.connect(mongoUri, mongoOptions)
-  .then(function(db)) {
-    mongoDb = db;
-  });
 
 scheduler.databasePromise = function() {
   // Return a promise to return a mongo database connection here...
-  return Q.when(mongoDb);
+  return MongoClient.connect(mongoUri, mongoOptions);
 };
 ```
 

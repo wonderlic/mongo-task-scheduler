@@ -1,14 +1,13 @@
 {
   "name": "mongo-task-scheduler",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "A promise based task scheduler for Node.js using a mongodb backing store.",
   "main": "index.js",
   "dependencies": {
     "cron-parser": "^2.2.0",
     "lodash": ">=3.8.0 < 4",
     "moment": ">=2.15.0",
-    "moment-timezone": ">=0.5.5",
-    "q": ">=1.2.0 < 2"
+    "moment-timezone": ">=0.5.5"
   },
   "peerDependencies": {
     "mongodb": ">= 2.0.36 < 3"
@@ -17,15 +16,7 @@
     "type": "git",
     "url": "https://github.com/wonderlic/mongo-task-scheduler.git"
   },
-  "devDependencies": {
-    "chai": "3.5.0",
-    "chai-datetime": "1.4.1",
-    "mocha": "3.0.2",
-    "mongodb": "2.2.10",
-    "sinon": "1.17.5",
-    "sinon-as-promised": "4.0.2"
-  },
-  "scripts": {
-    "test": "mocha"
+  "engines": {
+    "node": ">=8"
   }
 }
