@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "cron-parser": "^2.2.0",
-    "lodash": ">=3.8.0 < 4",
+    "lodash": ">=3.8.0 < 5",
     "moment": ">=2.15.0",
     "moment-timezone": ">=0.5.5"
   },
