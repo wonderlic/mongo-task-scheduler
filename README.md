@@ -6,7 +6,7 @@
 
 ## Package Dependency Notice
 
-NOTE:  This package makes use of promises (instead of callbacks) when interacting with mongodb which requires mongodb version 2.0.36 or higher.
+NOTE:  This package requires MongoDB server 5+ and MongoDB nodejs driver 4+
 
 ## Usage
 
@@ -20,9 +20,9 @@ npm install mongo-task-scheduler --save
 
 Example:
 ```javascript
-var TaskScheduler = require('mongo-task-scheduler');
+const TaskScheduler = require('mongo-task-scheduler');
 
-var scheduler = new TaskScheduler();
+const scheduler = new TaskScheduler();
 ```
 
 ### Database Configuration
@@ -31,10 +31,10 @@ Set the .databasePromise property to a function that returns a promise that (eve
 
 Example:
 ```javascript
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-var mongoUri = ...;
-var mongoOptions = ...;
+const mongoUri = ...;
+const mongoOptions = ...;
 
 scheduler.databasePromise = function() {
   // Return a promise to return a mongo database connection here...
@@ -77,7 +77,7 @@ scheduler.scheduleTask('daily-reminder', '0 5 * * *', function() {
 
 (The MIT License)
 
-Copyright (c) 2014 Wonderlic, Inc. <SoftwareDevelopment@wonderlic.com>
+Copyright (c) 2014-2022 Wonderlic, Inc. <SoftwareDevelopment@wonderlic.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
