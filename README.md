@@ -6,7 +6,7 @@
 
 ## Package Dependency Notice
 
-NOTE:  This package makes use of promises (instead of callbacks) when interacting with mongodb which requires mongodb version 2.0.36 or higher.
+NOTE: This package makes use of promises (instead of callbacks) when interacting with mongodb which requires mongodb version 2.0.36 or higher.
 
 ## Usage
 
@@ -19,10 +19,11 @@ npm install mongo-task-scheduler --save
 ### Require & Instantiate
 
 Example:
-```javascript
-var TaskScheduler = require('mongo-task-scheduler');
 
-var scheduler = new TaskScheduler();
+```javascript
+const TaskScheduler = require('mongo-task-scheduler');
+
+const scheduler = new TaskScheduler();
 ```
 
 ### Database Configuration
@@ -30,11 +31,12 @@ var scheduler = new TaskScheduler();
 Set the .databasePromise property to a function that returns a promise that (eventually) returns a mongodb database connection.
 
 Example:
-```javascript
-var MongoClient = require('mongodb').MongoClient;
 
-var mongoUri = ...;
-var mongoOptions = ...;
+```javascript
+const MongoClient = require('mongodb').MongoClient;
+
+const mongoUri = ...;
+const mongoOptions = ...;
 
 scheduler.databasePromise = function() {
   // Return a promise to return a mongo database connection here...
@@ -48,9 +50,10 @@ Use the .scheduleTask method to schedule a task and provide a processing method.
 
 `scheduler.scheduleTask(id, cronSchedule, worker)`
 
-Scheduling a task will cause the task scheduler to immediately start polling for work for that specified task.  By default, the task scheduler looks for tasks that need running at once every second (configurable by overridding the .pollingInterval property).  Polling will continue to occur until the .stopPolling() method is called.
+Scheduling a task will cause the task scheduler to immediately start polling for work for that specified task. By default, the task scheduler looks for tasks that need running at once every second (configurable by overridding the .pollingInterval property). Polling will continue to occur until the .stopPolling() method is called.
 
 The second parameter `cronSchedule` specifies the how often to run the task and uses cron syntax:
+
 ```
 *    *    *    *    *    *
 ┬    ┬    ┬    ┬    ┬    ┬
@@ -63,11 +66,12 @@ The second parameter `cronSchedule` specifies the how often to run the task and 
 └───────────────────────── second (0 - 59, optional)
 ```
 
-The third parameter `worker` specifies the processing method for the task.  When the task needs to be run, the provided processing method will be called.
+The third parameter `worker` specifies the processing method for the task. When the task needs to be run, the provided processing method will be called.
 
 Example (runs every morning at 5 AM):
+
 ```javascript
-scheduler.scheduleTask('daily-reminder', '0 5 * * *', function() {
+scheduler.scheduleTask('daily-reminder', '0 5 * * *', function () {
   // ... send the reminder here
   // this can return a promise (chain) if needed.
 });
@@ -77,7 +81,7 @@ scheduler.scheduleTask('daily-reminder', '0 5 * * *', function() {
 
 (The MIT License)
 
-Copyright (c) 2014 Wonderlic, Inc. <SoftwareDevelopment@wonderlic.com>
+Copyright (c) 2014-2023 Wonderlic, Inc. <SoftwareDevelopment@wonderlic.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
