@@ -1,6 +1,6 @@
 {
   "name": "mongo-task-scheduler",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A promise based task scheduler for Node.js using a mongodb backing store.",
   "main": "index.js",
   "dependencies": {
