@@ -6,7 +6,7 @@
 
 ## Package Dependency Notice
 
-NOTE: This package requires MongoDB server 5+ and MongoDB nodejs driver 4+
+NOTE: This package is compatible with the MongoDB nodejs driver versions 4 through 6 and supports MongoDB server versions 5 through 7. 
 
 ## Usage
 
@@ -81,7 +81,7 @@ scheduler.scheduleTask('daily-reminder', '0 5 * * *', function () {
 
 (The MIT License)
 
-Copyright (c) 2014-2023 Wonderlic, Inc. <SoftwareDevelopment@wonderlic.com>
+Copyright (c) 2014-2024 Wonderlic, Inc. <SoftwareDevelopment@wonderlic.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
