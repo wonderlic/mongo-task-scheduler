@@ -6,7 +6,7 @@
 
 ## Package Dependency Notice
 
-NOTE: This package requires mongodb version 4.0.0 or higher.
+NOTE: This package requires MongoDB server 5+ and MongoDB nodejs driver 4+
 
 ## Usage
 
