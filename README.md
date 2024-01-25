@@ -6,7 +6,7 @@
 
 ## Package Dependency Notice
 
-NOTE: This package makes use of promises (instead of callbacks) when interacting with mongodb which requires mongodb version 2.0.36 or higher.
+NOTE: This package requires mongodb version 4.0.0 or higher.
 
 ## Usage
 
