@@ -17,6 +17,6 @@
     "url": "https://github.com/wonderlic/mongo-task-scheduler.git"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=12"
   }
 }
