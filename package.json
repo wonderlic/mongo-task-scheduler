@@ -5,7 +5,6 @@
   "main": "index.js",
   "dependencies": {
     "cron-parser": "^2.2.0",
-    "lodash": ">=3.8.0 < 4",
     "moment": ">=2.15.0",
     "moment-timezone": ">=0.5.5"
   },
@@ -18,5 +17,9 @@
   },
   "engines": {
     "node": ">=12"
+  },
+  "devDependencies": {
+    "mongodb": "6.13.1",
+    "typescript": "5.7.3"
   }
 }
