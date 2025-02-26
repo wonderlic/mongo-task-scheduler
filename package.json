@@ -2,7 +2,7 @@
   "name": "mongo-task-scheduler",
   "version": "1.1.1",
   "description": "A promise based task scheduler for Node.js using a mongodb backing store.",
-  "main": "index.js",
+  "main": "lib/task-scheduler.js",
   "dependencies": {
     "cron-parser": "^2.2.0",
     "moment": ">=2.15.0",
@@ -19,7 +19,7 @@
     "node": ">=12"
   },
   "devDependencies": {
-    "mongodb": "6.13.1",
+    "mongodb": "6.3.0",
     "typescript": "5.7.3"
   }
 }

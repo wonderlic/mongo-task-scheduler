@@ -4,12 +4,12 @@ import cronParser from 'cron-parser';
 import type {Db as MongoDb, Collection as MongoCollection, Filter as MongoFilter, UpdateFilter as MongoUpdateFilter} from 'mongodb';
 
 
-type TaskWorker = (taskInstance: TaskInstance) => Promise<string | undefined> | string | undefined;
+type TaskWorker = (taskInstance: TaskInstance) => Promise<string | void> | string | undefined;
 
-interface TaskInstance {
+export interface TaskInstance {
   /// This method should be called by the task worker to signal that the task is making progress.
   /// Useful for long-running tasks that would otherwise be considered timed out.
-  signalProgress(): void;
+  signalProgress(): Promise<void>;
 }
 
 type TaskExecutionLogEntry = {receivedTime: Date; processingTime: number} & (
@@ -38,7 +38,7 @@ export class TaskScheduler {
   public collectionName = '_scheduledTasks';
   public databasePromise: (() => Promise<MongoDb>) | undefined;
 
-  async scheduleTask(id: string, cronSchedule: string, taskWorker: TaskWorker) {
+  async scheduleTask(id: string, cronSchedule: string, taskWorker: TaskWorker): Promise<void> {
     this.taskWorkers.set(id, taskWorker);
     this.startPolling();
 
@@ -49,7 +49,7 @@ export class TaskScheduler {
 
     if (!task) {
       console.log(`next scheduled time for task '${id}' is ${this.getFormattedTime(nextTime)}`);
-      return this.insertTask({
+      await this.insertTask({
         _id: id,
         cronSchedule,
         nextScheduledTime: nextTime
@@ -57,7 +57,7 @@ export class TaskScheduler {
     } else {
       if (task.cronSchedule !== cronSchedule) {
         console.log(`next scheduled time for task '${task._id}' is ${this.getFormattedTime(nextTime)}`);
-        return this.updateTask(task, {
+        await this.updateTask(task, {
           $set: {
             cronSchedule,
             nextScheduledTime: nextTime
@@ -110,7 +110,7 @@ export class TaskScheduler {
     }
   }
 
-  private async processTask(task: TaskDefinition): Promise<string | undefined> {
+  private async processTask(task: TaskDefinition): Promise<string | void> {
     const taskWorker = this.taskWorkers.get(task._id);
     if (!taskWorker) {
       throw new Error(`No worker registered for scheduled task with id: ${task._id}`);
@@ -118,6 +118,9 @@ export class TaskScheduler {
 
     return taskWorker({
       signalProgress: () => {
+        // !!!!!!!!!!! MUST DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // TODO: Throw an error if already timed out.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return this.updateTask(task, {
           $set: {
             receivedTime: new Date()
@@ -157,7 +160,7 @@ export class TaskScheduler {
     });
   }
 
-    private completeTask(task: TaskDefinition, output: string | undefined) {
+    private completeTask(task: TaskDefinition, output: string | void) {
       const now = new Date();
       const interval = cronParser.parseExpression(task.cronSchedule, {
         currentDate: moment().tz(this.timezone).add(1, 'seconds').toDate(),
@@ -181,7 +184,7 @@ export class TaskScheduler {
           receivedTime,
           completedTime: now,
           processingTime: now.valueOf() - receivedTime.valueOf(),
-          output,
+          output: output ?? undefined,
         }
       }
     });
@@ -199,7 +202,7 @@ export class TaskScheduler {
 
     const update = {
       $set: {
-        recievedTime: new Date()
+        receivedTime: new Date()
       }
     };
 
