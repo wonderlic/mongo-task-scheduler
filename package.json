@@ -4,6 +4,7 @@
   "description": "A promise based task scheduler for Node.js using a mongodb backing store.",
   "main": "lib/task-scheduler.js",
   "scripts": {
+    "prerelease": "npm run build",
     "build": "tsc"
   },
   "dependencies": {
