@@ -55,7 +55,7 @@ export class TaskScheduler {
         nextScheduledTime: nextTime
       });
     } else {
-      if (task.cronSchedule !== cronSchedule) {
+      if (task.cronSchedule !== cronSchedule || (!task.receivedTime && task.nextScheduledTime > nextTime)) {
         console.log(`next scheduled time for task '${task._id}' is ${this.getFormattedTime(nextTime)}`);
         await this.updateTask(task, {
           $set: {
@@ -117,15 +117,22 @@ export class TaskScheduler {
     }
 
     return taskWorker({
-      signalProgress: () => {
-        // !!!!!!!!!!! MUST DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // TODO: Throw an error if already timed out.
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return this.updateTask(task, {
-          $set: {
-            receivedTime: new Date()
-          }
-        });
+      // Allow a long-running task to signal that it is still making progress and not to time out.
+      signalProgress: async () => {
+        const collection = await this.getMongoCollection();
+        const result = await collection.findOneAndUpdate({
+            receivedTime: {$lt: new Date(Date.now() - this.processingTimeout)}
+          }, {
+            $set: {
+              receivedTime: new Date()
+            }
+          }, 
+          {returnDocument: 'after'}
+        );
+
+        if (!result) {
+          throw new Error('Task expired or no longer exists');
+        }
       }
     });
   }
@@ -134,7 +141,8 @@ export class TaskScheduler {
     const now = new Date();
     const interval = cronParser.parseExpression(task.cronSchedule, {
       currentDate: moment().tz(this.timezone).add(1, 'seconds').toDate(),
-      tz: this.timezone});
+      tz: this.timezone
+    });
 
     const nextTime = interval.next().toDate();
     console.log(`next scheduled time for task '${task._id}' is ${this.getFormattedTime(nextTime)}`);

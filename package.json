@@ -3,6 +3,9 @@
   "version": "1.2.0-longRunning.0",
   "description": "A promise based task scheduler for Node.js using a mongodb backing store.",
   "main": "lib/task-scheduler.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
     "cron-parser": "^2.2.0",
     "moment": ">=2.15.0",
