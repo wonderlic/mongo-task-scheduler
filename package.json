@@ -1,11 +1,17 @@
 {
   "name": "mongo-task-scheduler",
-  "version": "1.1.1",
+  "version": "1.2.0-longRunning.1",
   "description": "A promise based task scheduler for Node.js using a mongodb backing store.",
-  "main": "index.js",
+  "main": "lib/task-scheduler.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc"
+  },
   "dependencies": {
     "cron-parser": "^2.2.0",
-    "lodash": ">=3.8.0 < 4",
     "moment": ">=2.15.0",
     "moment-timezone": ">=0.5.5"
   },
@@ -18,5 +24,9 @@
   },
   "engines": {
     "node": ">=12"
+  },
+  "devDependencies": {
+    "mongodb": "6.3.0",
+    "typescript": "5.7.3"
   }
 }
