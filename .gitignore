@@ -2,4 +2,5 @@ node_modules/*
 .idea/*
 .env
 .npmrc
+lib/
 package-lock.json
