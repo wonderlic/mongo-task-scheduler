@@ -120,8 +120,9 @@ export class TaskScheduler {
       // Allow a long-running task to signal that it is still making progress and not to time out.
       signalProgress: async () => {
         const collection = await this.getMongoCollection();
+
         const result = await collection.findOneAndUpdate({
-            receivedTime: {$lt: new Date(Date.now() - this.processingTimeout)}
+            receivedTime: {$gt: new Date(Date.now() - this.processingTimeout)}
           }, {
             $set: {
               receivedTime: new Date()
