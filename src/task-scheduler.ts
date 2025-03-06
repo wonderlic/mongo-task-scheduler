@@ -122,6 +122,7 @@ export class TaskScheduler {
         const collection = await this.getMongoCollection();
 
         const result = await collection.findOneAndUpdate({
+            _id: task._id,
             receivedTime: {$gt: new Date(Date.now() - this.processingTimeout)}
           }, {
             $set: {
