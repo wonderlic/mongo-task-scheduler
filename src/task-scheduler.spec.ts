@@ -39,7 +39,7 @@ afterEach(async () => {
   vi.useRealTimers();
 });
 
-test.skip("Should pick up the task once the polling interval has passed", async () => {
+test("Should pick up the task once the polling interval has passed", async () => {
   const task1 = vi.fn();
 
   await taskScheduler.scheduleTask("task1", "* 1 * * *", task1);
